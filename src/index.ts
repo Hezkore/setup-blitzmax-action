@@ -31,7 +31,7 @@ async function run() {
 			
 			console.log( `BlitzMax Installed to ${cache_dir}` )
 		}
-		if (!cache_dir) throw new Error( `Could not initilize BlitzMax ${bmx_ver}` )
+		if (!cache_dir) throw new Error( `Could not setup BlitzMax ${bmx_ver}` )
 		
 		// Add BlitzMax bin folder to env variable
 		core.exportVariable( 'BMX_BIN', path.join( cache_dir, 'bin' ) )

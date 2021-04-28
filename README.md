@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup latest BlitzMax NG version
-      uses: hezkore/blitzmax-init-action@v1
+      uses: hezkore/setup-blitzmax-action@v1
       with:
         bmx-version: latest
 
@@ -59,7 +59,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup latest BlitzMax NG version
-      uses: hezkore/blitzmax-init-action@v1
+      uses: hezkore/setup-blitzmax-action@v1
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
@@ -74,7 +74,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup latest BlitzMax NG version
-      uses: hezkore/blitzmax-init-action@v1
+      uses: hezkore/setup-blitzmax-action@v1
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
@@ -89,7 +89,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup latest BlitzMax NG version
-      uses: hezkore/blitzmax-init-action@v1
+      uses: hezkore/setup-blitzmax-action@v1
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 

@@ -89,7 +89,7 @@ function run() {
                     _a.label = 3;
                 case 3:
                     if (!cache_dir)
-                        throw new Error("Could not initilize BlitzMax " + bmx_ver);
+                        throw new Error("Could not setup BlitzMax " + bmx_ver);
                     // Add BlitzMax bin folder to env variable
                     core.exportVariable('BMX_BIN', path.join(cache_dir, 'bin'));
                     if (!process.env.BMX_BIN)
