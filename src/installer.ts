@@ -27,7 +27,7 @@ export async function download( url: string, version: string ): Promise<string |
 		const output = './.bmx_tmp_build'
 		switch (releases.archive_format()) {
 			case '7z':
-				ext_path = await tc.extract7z( download_path, output, path.join( 'C:', 'Program Files', '7-Zip' ) )
+				ext_path = await tc.extract7z( download_path, output, path.join( 'C:', 'Program Files', '7-Zip', '7zr.exe' ) )
 				break
 			
 			case 'zip':
@@ -46,6 +46,7 @@ export async function download( url: string, version: string ): Promise<string |
 		ext_path = path.join( ext_path, 'BlitzMax' )
 		
 		// Cache the BlitzMax dir
+		console.log( `Caching BlitzMax ...` )
 		cache_path = await tc.cacheDir( ext_path, 'blitzmax', version )
 		
 		console.log( `BlitzMax was added to cache using dir: ${cache_path}` )

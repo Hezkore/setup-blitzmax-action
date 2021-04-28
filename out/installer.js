@@ -85,7 +85,7 @@ function download(url, version) {
                         case 'zip': return [3 /*break*/, 6];
                     }
                     return [3 /*break*/, 8];
-                case 4: return [4 /*yield*/, tc.extract7z(download_path, output, path.join('C:', 'Program Files', '7-Zip'))];
+                case 4: return [4 /*yield*/, tc.extract7z(download_path, output, path.join('C:', 'Program Files', '7-Zip', '7zr.exe'))];
                 case 5:
                     ext_path = _b.sent();
                     return [3 /*break*/, 10];
@@ -103,9 +103,10 @@ function download(url, version) {
                     console.log("BlitzMax extracted to " + ext_path);
                     // Make sure to enter the extracted BlitzMax dir
                     ext_path = path.join(ext_path, 'BlitzMax');
+                    // Cache the BlitzMax dir
+                    console.log("Caching BlitzMax ...");
                     return [4 /*yield*/, tc.cacheDir(ext_path, 'blitzmax', version)];
                 case 11:
-                    // Cache the BlitzMax dir
                     cache_path = _b.sent();
                     console.log("BlitzMax was added to cache using dir: " + cache_path);
                     return [3 /*break*/, 13];
