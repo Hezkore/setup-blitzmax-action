@@ -8,6 +8,9 @@ import {Release} from './releases'
 const debug = process.argv.includes( 'debug' )
 
 async function run() {
+	
+	console.log('PATH: ' + process.env.PATH )
+	
 	try {
 		let bmx_ver = core.getInput( 'bmx-version' )
 		if ( !bmx_ver ) bmx_ver = 'latest'
