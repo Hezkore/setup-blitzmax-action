@@ -9,7 +9,7 @@ const debug = process.argv.includes( 'debug' )
 
 async function run() {
 	
-	console.log('PATH: ' + process.env.PATH )
+	console.log('ENV: ' + process.env )
 	
 	try {
 		let bmx_ver = core.getInput( 'bmx-version' )

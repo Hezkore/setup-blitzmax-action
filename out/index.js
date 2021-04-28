@@ -67,7 +67,7 @@ function run() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log('PATH: ' + process.env.PATH);
+                    console.log('ENV: ' + process.env);
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 5, , 6]);
