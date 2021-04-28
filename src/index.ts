@@ -8,9 +8,6 @@ import {Release} from './releases'
 const debug = process.argv.includes( 'debug' )
 
 async function run() {
-	
-	console.log( process.env )
-	
 	try {
 		let bmx_ver = core.getInput( 'bmx-version' )
 		if ( !bmx_ver ) bmx_ver = 'latest'
@@ -47,11 +44,12 @@ async function run() {
 		// Set action output
 		core.setOutput( 'bmx-root', process.env.BMX_BIN )
 		
-		console.log( process.env )
-		
 		// Add problem matchers
 		const matchersPath = path.join( __dirname, '..', 'matchers.json' )
 		console.log( `##[add-matcher]${matchersPath}` )
+		
+		// Show PATH
+		console.log( "PATH: " + process.env.PATH )
 		
 	} catch ( error ) {
 		core.setFailed( error.message )

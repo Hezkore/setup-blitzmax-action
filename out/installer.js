@@ -61,7 +61,7 @@ var path = __importStar(require("path"));
 var releases = __importStar(require("./releases"));
 function download(url, version) {
     return __awaiter(this, void 0, void 0, function () {
-        var download_path, ext_path, cache_path, error_1, _a, error_2;
+        var download_path, ext_path, cache_path, error_1, output, _a, error_2;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -78,21 +78,22 @@ function download(url, version) {
                 case 3:
                     _b.trys.push([3, 12, , 13]);
                     console.log('Extracting ' + releases.archive_format() + ' BlitzMax...');
+                    output = './.bmx_tmp_build';
                     _a = releases.archive_format();
                     switch (_a) {
                         case '7z': return [3 /*break*/, 4];
                         case 'zip': return [3 /*break*/, 6];
                     }
                     return [3 /*break*/, 8];
-                case 4: return [4 /*yield*/, tc.extract7z(download_path, './.bmx_tmp_build')];
+                case 4: return [4 /*yield*/, tc.extract7z(download_path, output, path.join('C:', 'Program Files', '7-Zip'))];
                 case 5:
                     ext_path = _b.sent();
                     return [3 /*break*/, 10];
-                case 6: return [4 /*yield*/, tc.extractZip(download_path, './.bmx_tmp_build')];
+                case 6: return [4 /*yield*/, tc.extractZip(download_path, output)];
                 case 7:
                     ext_path = _b.sent();
                     return [3 /*break*/, 10];
-                case 8: return [4 /*yield*/, tc.extractTar(download_path, './.bmx_tmp_build', '-x')];
+                case 8: return [4 /*yield*/, tc.extractTar(download_path, output, '-x')];
                 case 9:
                     ext_path = _b.sent();
                     return [3 /*break*/, 10];

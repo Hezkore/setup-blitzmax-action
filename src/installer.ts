@@ -24,17 +24,18 @@ export async function download( url: string, version: string ): Promise<string |
 		console.log( 'Extracting '+  releases.archive_format() + ' BlitzMax...' )
 		
 		// Do extract!
+		const output = './.bmx_tmp_build'
 		switch (releases.archive_format()) {
 			case '7z':
-				ext_path = await tc.extract7z( download_path, './.bmx_tmp_build' )
+				ext_path = await tc.extract7z( download_path, output, path.join( 'C:', 'Program Files', '7-Zip' ) )
 				break
 			
 			case 'zip':
-				ext_path = await tc.extractZip( download_path, './.bmx_tmp_build' )
+				ext_path = await tc.extractZip( download_path, output )
 				break
 				
 			default:
-				ext_path = await tc.extractTar( download_path, './.bmx_tmp_build', '-x' )
+				ext_path = await tc.extractTar( download_path, output, '-x' )
 				break
 		}
 		
