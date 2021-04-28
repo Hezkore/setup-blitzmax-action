@@ -1,5 +1,5 @@
 # Setup BlitzMax NG Action
-GitHub Action that allows you to setup a specific BlitzMax NG version for later use.
+[GitHub Action](https://github.com/features/actions) that allows you to setup a specific [BlitzMax NG](https://blitzmax.org/) [version](https://github.com/bmx-ng/bmx-ng/tags) for later use.
 
 ## Usage
 Example workflow:
@@ -22,6 +22,8 @@ jobs:
       uses: hezkore/setup-blitzmax-action@v1
       with:
         bmx-version: latest
+        # latest (default)
+        # or version (e.g. 0.128.3.45)
 
     - name: Build repository app
       run: bmk makeapp -r main.bmx
@@ -30,7 +32,7 @@ jobs:
 ## Inputs
 
 * `bmx-version`: BlitzMax NG version.\
-  Can be either exact version number or `latest` _(by default)_.
+  Can be either exact version _(e.g. 0.128.3.45)_ number or `latest` _(default)_.
 
 ## Output
 
@@ -78,8 +80,8 @@ jobs:
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
-    # - name: Build repository app
-    #  run: your command line actions here
+    # - name: Your custom calls here
+    #  run: echo 'hello world'
 
   my-linux-job:
     name: Setup BlitzMax NG for Linux
@@ -90,9 +92,10 @@ jobs:
 
     - name: Setup latest BlitzMax NG version
       uses: hezkore/setup-blitzmax-action@v1
+      id: bmx
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
-    # - name: Build repository app
-    #  run: bmk makeapp -r main.bmx
+    - name: Echo BlitzMax NG root
+      run: echo '${{ steps.bmx.outputs.bmx-root }}'
 ```
