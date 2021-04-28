@@ -1,6 +1,5 @@
-# Setup BlitzMax NG Action
 ![logo](https://github.com/Hezkore/setup-blitzmax-action/blob/v1/icons/extension-icon.png?raw=true)
-
+# Setup BlitzMax NG Action
 [GitHub Action](https://github.com/features/actions) that allows you to setup a specific [BlitzMax NG](https://blitzmax.org/) [version](https://github.com/bmx-ng/bmx-ng/tags) for later use.
 
 ## Usage
