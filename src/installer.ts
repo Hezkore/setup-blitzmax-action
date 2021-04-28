@@ -27,7 +27,7 @@ export async function download( url: string, version: string ): Promise<string |
 		const output = './.bmx_tmp_build'
 		switch (releases.archive_format()) {
 			case '7z':
-				ext_path = await tc.extract7z( download_path, output, path.join( 'C:', 'Program Files', '7-Zip', '7zr.exe' ) )
+				ext_path = await tc.extract7z( download_path, output, path.join( 'C:', 'msys64', 'usr', 'bin', '7zr.exe' ) )
 				break
 			
 			case 'zip':
