@@ -41,10 +41,10 @@ export async function download( url: string, version: string ): Promise<string |
 		if ( !ext_path ) throw new Error( 'Failed to extract BlitzMax from ' + download_path )
 		console.log( `BlitzMax extracted to ${ext_path}` )
 		
-		ext_path = path.join( ext_path, 'BlitzMax/' )
+		// Make sure to enter the extracted BlitzMax dir
+		ext_path = path.join( ext_path, 'BlitzMax' )
 		
-		console.log( `Add BlitzMax to cache` )
-		
+		// Cache the BlitzMax dir
 		cache_path = await tc.cacheDir( ext_path, 'blitzmax', version )
 		
 		console.log( `BlitzMax was added to cache using dir: ${cache_path}` )

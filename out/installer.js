@@ -100,10 +100,11 @@ function download(url, version) {
                     if (!ext_path)
                         throw new Error('Failed to extract BlitzMax from ' + download_path);
                     console.log("BlitzMax extracted to " + ext_path);
-                    ext_path = path.join(ext_path, 'BlitzMax/');
-                    console.log("Add BlitzMax to cache");
+                    // Make sure to enter the extracted BlitzMax dir
+                    ext_path = path.join(ext_path, 'BlitzMax');
                     return [4 /*yield*/, tc.cacheDir(ext_path, 'blitzmax', version)];
                 case 11:
+                    // Cache the BlitzMax dir
                     cache_path = _b.sent();
                     console.log("BlitzMax was added to cache using dir: " + cache_path);
                     return [3 /*break*/, 13];

@@ -8,6 +8,9 @@ import {Release} from './releases'
 const debug = process.argv.includes( 'debug' )
 
 async function run() {
+	
+	console.log( process.env )
+	
 	try {
 		let bmx_ver = core.getInput( 'bmx-version' )
 		if ( !bmx_ver ) bmx_ver = 'latest'
@@ -31,14 +34,20 @@ async function run() {
 			
 			console.log( `BlitzMax Installed to ${cache_dir}` )
 		}
-		if (!cache_dir) throw new Error( `Could not install BlitzMax: ${bmx_ver}` )
+		if (!cache_dir) throw new Error( `Could not initilize BlitzMax ${bmx_ver}` )
 		
-		// Add BlitzMax to PATH and set output
-		core.exportVariable( 'BMX_BIN', path.join( cache_dir, 'bin') )
-		core.setOutput( 'bmx-root', cache_dir )
-		core.addPath( path.join( cache_dir, 'bin' ) )
+		// Add BlitzMax bin folder to env variable
+		core.exportVariable( 'BMX_BIN', path.join( cache_dir, 'bin' ) )
+		if (!process.env.BMX_BIN) throw new Error( `Could add BlitzMax ${bmx_ver} to PATH` )
 		
+		// Add BlitzMax bin to PATH
+		core.addPath( process.env.BMX_BIN )
 		console.log( 'Added BlitzMax to PATH' )
+		
+		// Set action output
+		core.setOutput( 'bmx-root', process.env.BMX_BIN )
+		
+		console.log( process.env )
 		
 		// Add problem matchers
 		const matchersPath = path.join( __dirname, '..', 'matchers.json' )

@@ -67,12 +67,15 @@ function run() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 4, , 5]);
+                    console.log(process.env);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 5, , 6]);
                     bmx_ver = core.getInput('bmx-version');
                     if (!bmx_ver)
                         bmx_ver = 'latest';
                     return [4 /*yield*/, releases.get(bmx_ver)];
-                case 1:
+                case 2:
                     bmx_release = _a.sent();
                     if (!bmx_release)
                         throw new Error("Could not find a version that satisfied version spec: " + bmx_ver);
@@ -80,29 +83,34 @@ function run() {
                     bmx_ver = bmx_release.version;
                     console.log("Using BlitzMax version " + bmx_ver);
                     cache_dir = debug ? undefined : tc.find('blitzmax', bmx_ver);
-                    if (!!cache_dir) return [3 /*break*/, 3];
+                    if (!!cache_dir) return [3 /*break*/, 4];
                     console.log("BlitzMax " + bmx_ver + " can't be found using cache, attempting to download ...");
                     return [4 /*yield*/, installer.download(bmx_release.browser_download_url, bmx_ver)];
-                case 2:
+                case 3:
                     cache_dir = _a.sent();
                     console.log("BlitzMax Installed to " + cache_dir);
-                    _a.label = 3;
-                case 3:
+                    _a.label = 4;
+                case 4:
                     if (!cache_dir)
-                        throw new Error("Could not install BlitzMax: " + bmx_ver);
-                    // Add BlitzMax to PATH and set output
+                        throw new Error("Could not initilize BlitzMax " + bmx_ver);
+                    // Add BlitzMax bin folder to env variable
                     core.exportVariable('BMX_BIN', path.join(cache_dir, 'bin'));
-                    core.setOutput('bmx-root', cache_dir);
-                    core.addPath(path.join(cache_dir, 'bin'));
+                    if (!process.env.BMX_BIN)
+                        throw new Error("Could add BlitzMax " + bmx_ver + " to PATH");
+                    // Add BlitzMax bin to PATH
+                    core.addPath(process.env.BMX_BIN);
                     console.log('Added BlitzMax to PATH');
+                    // Set action output
+                    core.setOutput('bmx-root', process.env.BMX_BIN);
+                    console.log(process.env);
                     matchersPath = path.join(__dirname, '..', 'matchers.json');
                     console.log("##[add-matcher]" + matchersPath);
-                    return [3 /*break*/, 5];
-                case 4:
+                    return [3 /*break*/, 6];
+                case 5:
                     error_1 = _a.sent();
                     core.setFailed(error_1.message);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     });
