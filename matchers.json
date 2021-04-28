@@ -1,0 +1,28 @@
+{
+    "problemMatchers": [
+        {
+            "name": "blitzmax",
+            "owner": "blitzmax",
+            "source": "BlitzMax",
+            "fileLocation": "absolute",
+            "label": "The standard BlitzMax problem matcher",
+            "background": {
+                "beginsPattern": ".",
+                "endsPattern": "."
+            },
+            "pattern": [
+                {
+                    "regexp": "^Compile (Error|Warning)?: (.*)",
+                    "message": 2,
+                    "severity": 1
+                },
+                {
+                    "regexp": "^\\[(.*.bmx);(\\d+);(\\d+)]",
+                    "file": 1,
+                    "line": 2,
+                    "endColumn": 3
+                }
+            ]
+        }
+    ]
+}

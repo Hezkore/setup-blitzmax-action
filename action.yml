@@ -1,0 +1,21 @@
+name: "BlitzMax NG Initialize"
+description: "Initializes specified BlitzMax NG version"
+author: "Hezkore"
+
+branding:
+  color: "blue"
+  icon: "download"
+
+inputs:
+  bmx-version:
+    description: BlitzMax NG Version
+    default: latest
+    required: true
+
+outputs:
+  bmx-root:
+    description: BlitzMax NG root folder
+
+runs:
+  using: "node12"
+  main: "out/index.js"
