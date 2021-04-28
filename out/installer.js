@@ -85,7 +85,7 @@ function download(url, version) {
                         case 'zip': return [3 /*break*/, 6];
                     }
                     return [3 /*break*/, 8];
-                case 4: return [4 /*yield*/, tc.extract7z(download_path, output)];
+                case 4: return [4 /*yield*/, tc.extract7z(download_path, output, path.join('C:', 'Program Files', '7-Zip', '7z.exe'))];
                 case 5:
                     ext_path = _b.sent();
                     return [3 /*break*/, 10];
