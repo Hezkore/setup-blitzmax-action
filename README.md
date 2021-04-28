@@ -33,7 +33,7 @@ jobs:
 ## Inputs
 
 * `bmx-version`: BlitzMax NG version.\
-  Can be either exact version _(e.g. 0.128.3.45)_ number or `latest` _(default)_.
+  Can be either exact version _(e.g. 0.128.3.45)_ or `latest` _(default)_.
 
 ## Output
 
