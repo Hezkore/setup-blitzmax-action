@@ -1,5 +1,5 @@
-name: "BlitzMax NG Initialize"
-description: "Initializes specified BlitzMax NG version"
+name: "Setp BlitzMax NG"
+description: "Setup a specific BlitzMax NG version for later use"
 author: "Hezkore"
 
 branding:

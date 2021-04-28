@@ -1,8 +1,8 @@
 {
-  "name": "blitzmax-init-action",
+  "name": "setup-blitzmax-action",
   "version": "1.0.0",
   "private": true,
-  "description": "BlitzMax NG Initialize Action",
+  "description": "Setup BlitzMax NG Action",
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc && ncc build",
