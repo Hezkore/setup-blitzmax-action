@@ -57,6 +57,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.download = void 0;
 var tc = __importStar(require("@actions/tool-cache"));
+var os = __importStar(require("os"));
 var path = __importStar(require("path"));
 var releases = __importStar(require("./releases"));
 function download(url, version) {
@@ -77,7 +78,7 @@ function download(url, version) {
                     throw new Error("Failed to download BlitzMax from " + url + ": " + error_1);
                 case 3:
                     _b.trys.push([3, 12, , 13]);
-                    console.log('Extracting ' + releases.archive_format() + ' BlitzMax...');
+                    console.log('Extracting ' + releases.archive_format() + ' BlitzMax ...');
                     output = './.bmx_tmp_build';
                     _a = releases.archive_format();
                     switch (_a) {
@@ -85,8 +86,11 @@ function download(url, version) {
                         case 'zip': return [3 /*break*/, 6];
                     }
                     return [3 /*break*/, 8];
-                case 4: return [4 /*yield*/, tc.extract7z(download_path, output, path.join('C:', 'Program Files', '7-Zip', '7z.exe'))];
+                case 4: return [4 /*yield*/, tc.extract7z(download_path, output, os.platform() === 'win32'
+                        ? path.join('C:', 'Program Files', '7-Zip', '7z.exe')
+                        : undefined)];
                 case 5:
+                    // Windows does NOT have 7zip in PATH!
                     ext_path = _b.sent();
                     return [3 /*break*/, 10];
                 case 6: return [4 /*yield*/, tc.extractZip(download_path, output)];
@@ -104,7 +108,7 @@ function download(url, version) {
                     // Make sure to enter the extracted BlitzMax dir
                     ext_path = path.join(ext_path, 'BlitzMax');
                     // Cache the BlitzMax dir
-                    console.log("Caching BlitzMax ...");
+                    console.log("Caching BlitzMax " + version + " ...");
                     return [4 /*yield*/, tc.cacheDir(ext_path, 'blitzmax', version)];
                 case 11:
                     cache_path = _b.sent();
