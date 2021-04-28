@@ -1,5 +1,5 @@
-# BlitzMax NG Initialize Action
-GitHub Action that allows you to initialize a specific BlitzMax NG version.
+# Setup BlitzMax NG Action
+GitHub Action that allows you to setup a specific BlitzMax NG version for later use.
 
 ## Usage
 Example workflow:
@@ -12,13 +12,13 @@ on:
 
 jobs:
   my-linux-job:
-    name: Initialize BlitzMax NG for Linux
+    name: Setup BlitzMax NG for Linux
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Initialize latest BlitzMax NG version
+    - name: Setup latest BlitzMax NG version
       uses: hezkore/blitzmax-init-action@v1
       with:
         bmx-version: latest
@@ -52,13 +52,13 @@ on:
 
 jobs:
   my-windows-job:
-    name: Initialize BlitzMax NG for Windows
+    name: Setup BlitzMax NG for Windows
     runs-on: windows-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Initialize latest BlitzMax NG version
+    - name: Setup latest BlitzMax NG version
       uses: hezkore/blitzmax-init-action@v1
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
@@ -67,32 +67,32 @@ jobs:
       run: bmk makeapp -r main.bmx
 
   my-macos-job:
-    name: Initialize BlitzMax NG for MacOS
+    name: Setup BlitzMax NG for MacOS
     runs-on: macos-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Initialize latest BlitzMax NG version
+    - name: Setup latest BlitzMax NG version
       uses: hezkore/blitzmax-init-action@v1
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
-    - name: Build repository app
-      run: bmk makeapp -r main.bmx
+    # - name: Build repository app
+    #  run: your command line actions here
 
   my-linux-job:
-    name: Initialize BlitzMax NG for Linux
+    name: Setup BlitzMax NG for Linux
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Initialize latest BlitzMax NG version
+    - name: Setup latest BlitzMax NG version
       uses: hezkore/blitzmax-init-action@v1
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
-    - name: Build repository app
-      run: bmk makeapp -r main.bmx
+    # - name: Build repository app
+    #  run: bmk makeapp -r main.bmx
 ```
