@@ -8,11 +8,13 @@ export async function get( version: string ): Promise<Release | undefined> {
 
 		let json = await release_pages()
 		if ( !json ) return resolve( undefined )
+		if ( json.length <= 0 ) return resolve( undefined )
 
 		const match = platform_name()
-		// console.log( 'Looking for a ' + match + ' release' )
+		console.log( 'System version ' + match )
 
 		json.forEach( release => {
+			if ( !release ) return resolve( undefined )
 			release.assets.forEach( asset => {
 
 				// Is this a match for what we want?
@@ -21,7 +23,7 @@ export async function get( version: string ): Promise<Release | undefined> {
 					// Extract version for potential matches
 					asset.version = asset.name.substr(
 						asset.name.lastIndexOf( '_' ) + 1 ).
-						slice( 0, -archive_format().length -1 )
+						slice( 0, -archive_format().length - 1 )
 
 					if ( version == 'latest' ) {
 						// Latest is always first, so just return first match

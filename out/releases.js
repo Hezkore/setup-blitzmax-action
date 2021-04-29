@@ -72,9 +72,13 @@ function get(version) {
                                 json = _a.sent();
                                 if (!json)
                                     return [2 /*return*/, resolve(undefined)];
+                                if (json.length <= 0)
+                                    return [2 /*return*/, resolve(undefined)];
                                 match = platform_name();
-                                // console.log( 'Looking for a ' + match + ' release' )
+                                console.log('System version ' + match);
                                 json.forEach(function (release) {
+                                    if (!release)
+                                        return resolve(undefined);
                                     release.assets.forEach(function (asset) {
                                         // Is this a match for what we want?
                                         if (asset.name.startsWith(match)) {
