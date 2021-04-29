@@ -109,9 +109,9 @@ function download(url, version) {
                     console.log("BlitzMax extracted to " + ext_path);
                     // Make sure to enter the extracted BlitzMax dir
                     ext_path = path.join(ext_path, 'BlitzMax');
-                    runScript = 'run_me_first.command';
-                    if (fs.existsSync(path.join(ext_path, runScript))) {
-                        console.log("Found '" + runScript + "'");
+                    runScript = path.join(ext_path, 'run_me_first.command');
+                    if (fs.existsSync(runScript)) {
+                        console.log("BlitzMax needs to be compiled on this platform");
                         console.log(child_process_1.execSync(runScript, { cwd: ext_path }).toString());
                     }
                     // Cache the BlitzMax dir

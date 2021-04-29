@@ -2,7 +2,7 @@ import * as tc from '@actions/tool-cache'
 import * as os from 'os'
 import * as fs from 'fs'
 import * as path from 'path'
-import {execSync} from 'child_process';
+import { execSync } from 'child_process';
 import * as releases from './releases'
 
 export async function download( url: string, version: string ): Promise<string | undefined> {
@@ -54,10 +54,10 @@ export async function download( url: string, version: string ): Promise<string |
 		ext_path = path.join( ext_path, 'BlitzMax' )
 
 		// Run 'run_me_first.command' if it exists
-		const runScript = 'run_me_first.command'
-		if ( fs.existsSync( path.join( ext_path, runScript ) ) ) {
-			console.log( `Found '${runScript}'` )
-			console.log(execSync(runScript, { cwd: ext_path }).toString())
+		const runScript = path.join( ext_path, 'run_me_first.command' )
+		if ( fs.existsSync( runScript ) ) {
+			console.log( `BlitzMax needs to be compiled on this platform` )
+			console.log( execSync( runScript, { cwd: ext_path } ).toString() )
 		}
 
 		// Cache the BlitzMax dir
