@@ -57,7 +57,7 @@ export async function download( url: string, version: string ): Promise<string |
 		const runScript = path.join( ext_path, 'run_me_first.command' )
 		if ( fs.existsSync( runScript ) ) {
 			console.log( `BlitzMax needs to be compiled on this platform` )
-			console.log( execSync( runScript, { cwd: ext_path } ).toString() )
+			console.log( execSync( runScript ).toString() )
 		}
 
 		// Cache the BlitzMax dir

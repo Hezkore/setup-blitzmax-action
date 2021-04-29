@@ -11,7 +11,7 @@ export async function get( version: string ): Promise<Release | undefined> {
 		if ( json.length <= 0 ) return resolve( undefined )
 
 		const match = platform_name()
-		console.log( 'System version ' + match )
+		//console.log( 'System version ' + match )
 
 		json.forEach( release => {
 			if ( !release ) return resolve( undefined )

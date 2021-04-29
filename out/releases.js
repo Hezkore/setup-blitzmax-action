@@ -75,7 +75,7 @@ function get(version) {
                                 if (json.length <= 0)
                                     return [2 /*return*/, resolve(undefined)];
                                 match = platform_name();
-                                console.log('System version ' + match);
+                                //console.log( 'System version ' + match )
                                 json.forEach(function (release) {
                                     if (!release)
                                         return resolve(undefined);
