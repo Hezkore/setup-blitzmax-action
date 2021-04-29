@@ -18,7 +18,7 @@ async function main() {
 
 		// Update official release version
 		bmx_ver = bmx_release.version
-		console.log( `Settling on release ${bmx_release.name}` )
+		console.log( `Will search for release ${bmx_release.name}` )
 
 		// Look for a cached BlitzMax version
 		let cache_dir: string | undefined = debug ? undefined : tc.find( 'blitzmax', bmx_ver )
