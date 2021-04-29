@@ -2,7 +2,27 @@
 # Setup BlitzMax NG Action
 [GitHub Action](https://github.com/features/actions) that allows you to setup a specific [BlitzMax NG](https://blitzmax.org/) [version](https://github.com/bmx-ng/bmx-ng/tags) for later use.
 
+## How does this work?
+This action will run a job JavaScript that performs the following steps:
+  * Fetch release info from [bmx-ng/releases](https://github.com/bmx-ng/bmx-ng/releases)
+  * Figure out BlitzMax NG equivalent platform name
+  * Find and download matching release for the specified BlitzMax NG version and platform
+  * Decompress downloaded archive\
+    _(.zip on MacOS, .7z on Windows and .tar.xz for every other OS)_
+  * Build BlitzMax NG on platforms that provide a **'run_me_first.command'** file
+  * Cache the BlitzMax NG root folder for future jobs
+  * Add BlitzMax NG **'bin'** folder to **PATH**
+  * Add **'BMX_BIN'** env variable
+  * Set action output **'bmx-root'**\
+    _(for easy access if modules need to be added)_
+
+You can then use the BlitzMax NG compiler via the normal bmk commands.\
+[Read more about bmk.](https://blitzmax.org/docs/en/tools/bmk/)
+
 ## Usage
+Make sure you read the BlitzMax NG bmk docs:\
+[blitzmax.org/docs/en/tools/bmk](https://blitzmax.org/docs/en/tools/bmk/)\
+\
 Example workflow:
 ```yml
 # file: .github/workflows/blitzmax-pipeline.yml
