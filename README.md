@@ -81,8 +81,11 @@ jobs:
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
-    # - name: Your custom calls here
-    #  run: echo 'hello world'
+    - name: Build repository app
+      run: bmk makeapp -r main.bmx
+
+    # - name: Your custom step
+    #  run: echo 'Hello World'
 
   my-linux-job:
     name: Setup BlitzMax NG for Linux
@@ -93,10 +96,10 @@ jobs:
 
     - name: Setup latest BlitzMax NG version
       uses: hezkore/setup-blitzmax-action@v1
-      id: bmx
+      id: bmx # Set step reference ID
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
-    - name: Echo BlitzMax NG root
-      run: echo '${{ steps.bmx.outputs.bmx-root }}'
+    - name: Echo BlitzMax NG root example
+      run: echo '${{ steps.bmx.outputs.bmx-root }}' # Use step reference ID
 ```
