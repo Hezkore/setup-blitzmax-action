@@ -22,7 +22,6 @@ async function main() {
 
 		// Look for a cached BlitzMax version
 		let cache_dir: string | undefined = debug ? undefined : tc.find( 'blitzmax', bmx_ver )
-		//let install_dir: string | undefined
 
 		if ( !cache_dir ) { // BlitzMax version not installed
 			console.log( `BlitzMax ${bmx_ver} can't be found using cache, attempting to download ...` )
@@ -47,7 +46,6 @@ async function main() {
 		// Add problem matchers
 		const matchersPath = path.join( __dirname, '..', 'matchers.json' )
 		console.log( `##[add-matcher]${matchersPath}` )
-
 	} catch ( error ) {
 		core.setFailed( error.message )
 	}

@@ -42,7 +42,7 @@ export async function download( url: string, version: string ): Promise<string |
 				ext_path = await tc.extractZip( download_path, output )
 				break
 
-			default:
+			default: // assume .tar.xz
 				ext_path = await tc.extractTar( download_path, output, '-x' )
 				break
 		}

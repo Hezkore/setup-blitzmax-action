@@ -9,18 +9,18 @@ const maxRetry = 3
 export async function get( version: string ): Promise<Release | undefined> {
 	return new Promise<Release | undefined>( async ( resolve, _reject ) => {
 
-		console.log( `Searching for BlitzMax release '${version}' ...` )
+		console.log( `Searching for BlitzMax release '${version}'` )
 
 		let json: ReleasePage[] | undefined = await release_pages()
-		
+
 		// Okay, do a few retries to fetch releases if it failed
 		if ( !json ) {
-			for (let retry = 1; retry <= maxRetry; retry++) {
+			for ( let retry = 1; retry <= maxRetry; retry++ ) {
 				console.log( `Unable to fetch releases, retry ${retry}/${maxRetry}` )
-				json  = await release_pages()
+				json = await release_pages()
 			}
 		}
-		
+
 		if ( !json ) return resolve( undefined )
 		if ( json == undefined ) return resolve( undefined )
 		if ( json.length <= 0 ) return resolve( undefined )
@@ -70,24 +70,26 @@ export async function get( version: string ): Promise<Release | undefined> {
 async function release_pages(): Promise<ReleasePage[] | undefined> {
 	return new Promise<ReleasePage[] | undefined>( ( resolve, _reject ) => {
 
-		var options = {
+		console.log( 'Fetching BlitzMax releases ...' )
+
+		let options = {
 			host: 'api.github.com',
 			path: '/repos/bmx-ng/bmx-ng/releases',
 			method: 'GET',
 			headers: { 'user-agent': 'node.js' }
 		}
 
+		let body: string = ''
+
 		https.get( options, res => {
-			let body = ''
 
 			res.on( 'data', chunk => {
 				body += chunk
 			} )
 
-			res.on( 'end', () => {
+			res.on( 'end', async () => {
 				try {
-					let json: ReleasePage[] = JSON.parse( body )
-					return resolve( json )
+					return resolve( await JSON.parse( body ) )
 				} catch ( error ) {
 					console.error( error.message )
 					return resolve( undefined )
@@ -98,7 +100,6 @@ async function release_pages(): Promise<ReleasePage[] | undefined> {
 			console.error( error.message )
 			return resolve( undefined )
 		} )
-
 	} )
 }
 
