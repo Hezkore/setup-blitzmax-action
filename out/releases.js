@@ -55,16 +55,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.archive_format = exports.platform_name = exports.get = exports.apiUrl = void 0;
+exports.platform_name = exports.get = exports.archiveFormat = exports.apiUrl = void 0;
 var https = __importStar(require("https"));
 var os = __importStar(require("os"));
 exports.apiUrl = 'https://github.com/bmx-ng/bmx-ng/releases/download/';
+var knownArchiveFormats = ['.tar.xz', '.zip', '.7z'];
+exports.archiveFormat = knownArchiveFormats[0];
 function get(version) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, _reject) { return __awaiter(_this, void 0, void 0, function () {
-                    var json, match;
+                    var json, match, releasePageIndex, release, releaseIndex, asset, formatIndex, format;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, release_pages()];
@@ -77,28 +79,36 @@ function get(version) {
                                 if (json.length <= 0)
                                     return [2 /*return*/, resolve(undefined)];
                                 match = platform_name();
-                                //console.log( 'System version ' + match )
-                                json.forEach(function (release) {
-                                    if (!release)
-                                        return resolve(undefined);
-                                    release.assets.forEach(function (asset) {
+                                for (releasePageIndex = 0; releasePageIndex < json.length; releasePageIndex++) {
+                                    release = json[releasePageIndex];
+                                    for (releaseIndex = 0; releaseIndex < release.assets.length; releaseIndex++) {
+                                        asset = release.assets[releaseIndex];
                                         // Is this a match for what we want?
                                         if (asset.name.startsWith(match)) {
+                                            // Extract archive format
+                                            exports.archiveFormat = knownArchiveFormats[0];
+                                            for (formatIndex = 0; formatIndex < knownArchiveFormats.length; formatIndex++) {
+                                                format = knownArchiveFormats[formatIndex];
+                                                if (asset.name.toLowerCase().endsWith(format)) {
+                                                    exports.archiveFormat = format;
+                                                    break;
+                                                }
+                                            }
                                             // Extract version for potential matches
                                             asset.version = asset.name.substr(asset.name.lastIndexOf('_') + 1).
-                                                slice(0, -archive_format().length - 1);
+                                                slice(0, -exports.archiveFormat.length - 1);
                                             if (version == 'latest') {
                                                 // Latest is always first, so just return first match
-                                                return resolve(asset);
+                                                return [2 /*return*/, resolve(asset)];
                                             }
                                             else {
                                                 // Does it match the requested version?
                                                 if (asset.version == version)
-                                                    return resolve(asset);
+                                                    return [2 /*return*/, resolve(asset)];
                                             }
                                         }
-                                    });
-                                });
+                                    }
+                                }
                                 return [2 /*return*/, resolve(undefined)];
                         }
                     });
@@ -152,14 +162,3 @@ function platform_name() {
     return 'BlitzMax_' + plat;
 }
 exports.platform_name = platform_name;
-function archive_format() {
-    switch (os.platform()) {
-        case 'win32':
-            return '7z';
-        case 'darwin':
-            return 'zip';
-        default:
-            return 'tar.xz';
-    }
-}
-exports.archive_format = archive_format;

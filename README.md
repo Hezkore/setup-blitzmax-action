@@ -7,8 +7,7 @@ This action will run a job JavaScript that performs the following steps:
   * Fetch release info from [bmx-ng/releases](https://github.com/bmx-ng/bmx-ng/releases)
   * Figure out BlitzMax NG equivalent platform name
   * Find and download matching release for the specified BlitzMax NG version and platform
-  * Decompress downloaded archive\
-    _(.zip on MacOS, .7z on Windows and .tar.xz for every other OS)_
+  * Detect file type and use correct tool to decompress downloaded archive
   * Build BlitzMax NG on platforms that provide a **'run_me_first.command'** file
   * Cache the BlitzMax NG root folder for future jobs
   * Add BlitzMax NG **'bin'** folder to **PATH**

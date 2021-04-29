@@ -70,6 +70,7 @@ function download(url, version) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
                     console.log("Downloading BlitzMax from " + url);
+                    console.log("Archive format: " + releases.archiveFormat);
                     return [4 /*yield*/, tc.downloadTool(url)];
                 case 1:
                     download_path = _b.sent();
@@ -80,12 +81,12 @@ function download(url, version) {
                     throw new Error("Failed to download BlitzMax from " + url + ": " + error_1);
                 case 3:
                     _b.trys.push([3, 12, , 13]);
-                    console.log('Extracting ' + releases.archive_format() + ' BlitzMax ...');
+                    console.log('Extracting ' + releases.archiveFormat + ' BlitzMax ...');
                     output = './.bmx_tmp_build';
-                    _a = releases.archive_format();
+                    _a = releases.archiveFormat;
                     switch (_a) {
-                        case '7z': return [3 /*break*/, 4];
-                        case 'zip': return [3 /*break*/, 6];
+                        case '.7z': return [3 /*break*/, 4];
+                        case '.zip': return [3 /*break*/, 6];
                     }
                     return [3 /*break*/, 8];
                 case 4: return [4 /*yield*/, tc.extract7z(download_path, output, os.platform() === 'win32'

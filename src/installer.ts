@@ -13,6 +13,7 @@ export async function download( url: string, version: string ): Promise<string |
 	// Download BlitzMax
 	try {
 		console.log( `Downloading BlitzMax from ${url}` )
+		console.log( `Archive format: ${releases.archiveFormat}` )
 
 		download_path = await tc.downloadTool( url )
 
@@ -24,12 +25,12 @@ export async function download( url: string, version: string ): Promise<string |
 
 	// Extract BlitzMax
 	try {
-		console.log( 'Extracting ' + releases.archive_format() + ' BlitzMax ...' )
+		console.log( 'Extracting ' + releases.archiveFormat + ' BlitzMax ...' )
 
 		// Do extract!
 		const output = './.bmx_tmp_build'
-		switch ( releases.archive_format() ) {
-			case '7z':
+		switch ( releases.archiveFormat ) {
+			case '.7z':
 				// Windows does NOT have 7zip in PATH!
 				ext_path = await tc.extract7z( download_path, output,
 					os.platform() === 'win32'
@@ -38,7 +39,7 @@ export async function download( url: string, version: string ): Promise<string |
 				)
 				break
 
-			case 'zip':
+			case '.zip':
 				ext_path = await tc.extractZip( download_path, output )
 				break
 

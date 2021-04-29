@@ -1,7 +1,10 @@
 import * as https from 'https'
+import * as path from 'path'
 import * as os from 'os'
 
 export const apiUrl = 'https://github.com/bmx-ng/bmx-ng/releases/download/'
+const knownArchiveFormats: string[] = ['.tar.xz', '.zip', '.7z']
+export let archiveFormat: string = knownArchiveFormats[0]
 
 export async function get( version: string ): Promise<Release | undefined> {
 	return new Promise<Release | undefined>( async ( resolve, _reject ) => {
@@ -12,19 +15,30 @@ export async function get( version: string ): Promise<Release | undefined> {
 		if ( json.length <= 0 ) return resolve( undefined )
 
 		const match = platform_name()
-		//console.log( 'System version ' + match )
 
-		json.forEach( release => {
-			if ( !release ) return resolve( undefined )
-			release.assets.forEach( asset => {
+		for ( let releasePageIndex = 0; releasePageIndex < json.length; releasePageIndex++ ) {
+			const release = json[releasePageIndex]
+
+			for ( let releaseIndex = 0; releaseIndex < release.assets.length; releaseIndex++ ) {
+				const asset = release.assets[releaseIndex]
 
 				// Is this a match for what we want?
 				if ( asset.name.startsWith( match ) ) {
 
+					// Extract archive format
+					archiveFormat = knownArchiveFormats[0]
+					for ( let formatIndex = 0; formatIndex < knownArchiveFormats.length; formatIndex++ ) {
+						const format = knownArchiveFormats[formatIndex]
+						if ( asset.name.toLowerCase().endsWith( format ) ) {
+							archiveFormat = format
+							break
+						}
+					}
+
 					// Extract version for potential matches
 					asset.version = asset.name.substr(
 						asset.name.lastIndexOf( '_' ) + 1 ).
-						slice( 0, -archive_format().length - 1 )
+						slice( 0, -archiveFormat.length - 1 )
 
 					if ( version == 'latest' ) {
 						// Latest is always first, so just return first match
@@ -34,8 +48,9 @@ export async function get( version: string ): Promise<Release | undefined> {
 						if ( asset.version == version ) return resolve( asset )
 					}
 				}
-			} )
-		} )
+
+			}
+		}
 
 		return resolve( undefined )
 	} )
@@ -87,20 +102,6 @@ export function platform_name(): string {
 	if ( plat !== 'win32' ) plat += '_' + os.arch()
 
 	return 'BlitzMax_' + plat
-}
-
-export function archive_format(): string {
-
-	switch ( os.platform() ) {
-		case 'win32':
-			return '7z'
-
-		case 'darwin':
-			return 'zip'
-
-		default:
-			return 'tar.xz'
-	}
 }
 
 interface ReleasePage {
