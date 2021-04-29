@@ -78,7 +78,7 @@ function main() {
                         throw new Error("Could not find a release that satisfied version '" + bmx_ver + "'");
                     // Update official release version
                     bmx_ver = bmx_release.version;
-                    console.log("Will search for release " + bmx_release.name);
+                    console.log("Settling on release " + bmx_release.name);
                     cache_dir = debug ? undefined : tc.find('blitzmax', bmx_ver);
                     if (!!cache_dir) return [3 /*break*/, 3];
                     console.log("BlitzMax " + bmx_ver + " can't be found using cache, attempting to download ...");

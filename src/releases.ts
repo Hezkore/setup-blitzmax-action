@@ -9,10 +9,10 @@ const maxRetry = 3
 export async function get( version: string ): Promise<Release | undefined> {
 	return new Promise<Release | undefined>( async ( resolve, _reject ) => {
 
-		console.log( `Searching for BlitzMax release '${version}'` )
+		console.log( `Will search for BlitzMax release '${version}'` )
 
 		let json: ReleasePage[] | undefined = await release_pages()
-
+		
 		// Okay, do a few retries to fetch releases if it failed
 		if ( !json ) {
 			for ( let retry = 1; retry <= maxRetry; retry++ ) {
@@ -24,6 +24,8 @@ export async function get( version: string ): Promise<Release | undefined> {
 		if ( !json ) return resolve( undefined )
 		if ( json == undefined ) return resolve( undefined )
 		if ( json.length <= 0 ) return resolve( undefined )
+		
+		console.log( `Comparing against ${json.length} releases ...` )
 
 		const match = platform_name()
 

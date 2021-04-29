@@ -3,7 +3,6 @@ import * as core from '@actions/core'
 import * as path from 'path'
 import * as installer from './installer'
 import * as releases from './releases'
-import { Release } from './releases'
 
 const debug = process.argv.includes( 'debug' )
 
@@ -18,7 +17,7 @@ async function main() {
 
 		// Update official release version
 		bmx_ver = bmx_release.version
-		console.log( `Will search for release ${bmx_release.name}` )
+		console.log( `Settling on release ${bmx_release.name}` )
 
 		// Look for a cached BlitzMax version
 		let cache_dir: string | undefined = debug ? undefined : tc.find( 'blitzmax', bmx_ver )

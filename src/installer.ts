@@ -1,4 +1,5 @@
 import * as tc from '@actions/tool-cache'
+import * as core from '@actions/core'
 import * as os from 'os'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -57,7 +58,7 @@ export async function download( url: string, version: string ): Promise<string |
 		const runScript = path.join( ext_path, 'run_me_first.command' )
 		if ( fs.existsSync( runScript ) ) {
 			console.log( `BlitzMax needs to be compiled on this platform` )
-			console.log( `Compiling BlitzMax ...` )
+			core.info( 'Compiling BlitzMax...' )
 			console.log( execSync( runScript ).toString() )
 		}
 

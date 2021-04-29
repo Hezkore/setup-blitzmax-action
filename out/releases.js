@@ -71,7 +71,7 @@ function get(version) {
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
-                                console.log("Searching for BlitzMax release '" + version + "'");
+                                console.log("Will search for BlitzMax release '" + version + "'");
                                 return [4 /*yield*/, release_pages()
                                     // Okay, do a few retries to fetch releases if it failed
                                 ];
@@ -97,6 +97,7 @@ function get(version) {
                                     return [2 /*return*/, resolve(undefined)];
                                 if (json.length <= 0)
                                     return [2 /*return*/, resolve(undefined)];
+                                console.log("Comparing against " + json.length + " releases ...");
                                 match = platform_name();
                                 for (releasePageIndex = 0; releasePageIndex < json.length; releasePageIndex++) {
                                     release = json[releasePageIndex];

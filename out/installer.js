@@ -57,6 +57,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.download = void 0;
 var tc = __importStar(require("@actions/tool-cache"));
+var core = __importStar(require("@actions/core"));
 var os = __importStar(require("os"));
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
@@ -112,7 +113,7 @@ function download(url, version) {
                     runScript = path.join(ext_path, 'run_me_first.command');
                     if (fs.existsSync(runScript)) {
                         console.log("BlitzMax needs to be compiled on this platform");
-                        console.log("Compiling BlitzMax ...");
+                        core.info('Compiling BlitzMax...');
                         console.log(child_process_1.execSync(runScript).toString());
                     }
                     // Cache the BlitzMax dir
