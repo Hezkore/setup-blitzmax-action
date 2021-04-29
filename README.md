@@ -5,10 +5,10 @@
 ## How does this work?
 This action will run a job JavaScript that performs the following steps:
   * Fetch release info from [bmx-ng/releases](https://github.com/bmx-ng/bmx-ng/releases)
-  * Figure out BlitzMax NG equivalent platform name
+  * Figure out BlitzMax NG release equivalent platform name
   * Find and download matching release for the specified BlitzMax NG version and platform
-  * Detect file type and use correct tool to decompress downloaded archive
-  * Build BlitzMax NG on platforms that provide a **'run_me_first.command'** file
+  * Detect release archive type and use the correct tool to decompress
+  * If needed; build BlitzMax NG on platforms that provide a **'run_me_first.command'** file
   * Cache the BlitzMax NG root folder for future jobs
   * Add BlitzMax NG **'bin'** folder to **PATH**
   * Add **'BMX_BIN'** env variable
@@ -28,6 +28,7 @@ Example workflow:
 name: blitzmax-pipeline
 
 on:
+  # manual trigger
   workflow_dispatch:
 
 jobs:
@@ -52,7 +53,7 @@ jobs:
 ## Inputs
 
 * `bmx-version`: BlitzMax NG version.\
-  Can be either exact version _(e.g. 0.128.3.45)_ or `latest` _(default)_.
+  Can be either version _(e.g. `0.128.3.45`)_ or `latest` _(default)_.
 
 ## Output
 
@@ -65,14 +66,17 @@ jobs:
 name: blitzmax-pipeline
 
 on:
+  # manual trigger
   workflow_dispatch:
     inputs:
+      # option for BlitzMax NG version
       bmx-ver:
         description: BlitzMax Version
         default: latest
         required: false
 
 jobs:
+  # compile your code on Windows
   my-windows-job:
     name: Setup BlitzMax NG for Windows
     runs-on: windows-latest
@@ -88,6 +92,7 @@ jobs:
     - name: Build repository app
       run: bmk makeapp -r main.bmx
 
+  # compile your code on MacOS
   my-macos-job:
     name: Setup BlitzMax NG for MacOS
     runs-on: macos-latest
@@ -106,6 +111,7 @@ jobs:
     # - name: Your custom step
     #  run: echo 'Hello World'
 
+  # echo BlitzMax NG root dir on Linux
   my-linux-job:
     name: Setup BlitzMax NG for Linux
     runs-on: ubuntu-latest
@@ -115,10 +121,10 @@ jobs:
 
     - name: Setup latest BlitzMax NG version
       uses: hezkore/setup-blitzmax-action@v1
-      id: bmx # Set step reference ID
+      id: bmx # set step reference ID
       with:
         bmx-version: ${{ github.event.inputs.bmx-ver }}
 
     - name: Echo BlitzMax NG root example
-      run: echo '${{ steps.bmx.outputs.bmx-root }}' # Use step reference ID
+      run: echo '${{ steps.bmx.outputs.bmx-root }}' # use step reference ID
 ```
