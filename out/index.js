@@ -98,7 +98,7 @@ function run() {
                     core.addPath(process.env.BMX_BIN);
                     console.log('Added BlitzMax to PATH');
                     // Set action output
-                    core.setOutput('bmx-root', process.env.BMX_BIN);
+                    core.setOutput('bmx-root', cache_dir);
                     matchersPath = path.join(__dirname, '..', 'matchers.json');
                     console.log("##[add-matcher]" + matchersPath);
                     return [3 /*break*/, 5];

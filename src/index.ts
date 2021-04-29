@@ -42,7 +42,7 @@ async function run() {
 		console.log( 'Added BlitzMax to PATH' )
 		
 		// Set action output
-		core.setOutput( 'bmx-root', process.env.BMX_BIN )
+		core.setOutput( 'bmx-root', cache_dir )
 		
 		// Add problem matchers
 		const matchersPath = path.join( __dirname, '..', 'matchers.json' )
