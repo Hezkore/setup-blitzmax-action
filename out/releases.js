@@ -72,6 +72,8 @@ function get(version) {
                                 json = _a.sent();
                                 if (!json)
                                     return [2 /*return*/, resolve(undefined)];
+                                if (json == undefined)
+                                    return [2 /*return*/, resolve(undefined)];
                                 if (json.length <= 0)
                                     return [2 /*return*/, resolve(undefined)];
                                 match = platform_name();

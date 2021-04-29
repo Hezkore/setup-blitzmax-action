@@ -2,7 +2,7 @@ import * as tc from '@actions/tool-cache'
 import * as os from 'os'
 import * as fs from 'fs'
 import * as path from 'path'
-import { execSync } from 'child_process';
+import { execSync } from 'child_process'
 import * as releases from './releases'
 
 export async function download( url: string, version: string ): Promise<string | undefined> {

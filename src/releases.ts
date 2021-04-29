@@ -6,8 +6,9 @@ export const apiUrl = 'https://github.com/bmx-ng/bmx-ng/releases/download/'
 export async function get( version: string ): Promise<Release | undefined> {
 	return new Promise<Release | undefined>( async ( resolve, _reject ) => {
 
-		let json = await release_pages()
+		let json: ReleasePage[] | undefined = await release_pages()
 		if ( !json ) return resolve( undefined )
+		if ( json == undefined ) return resolve( undefined )
 		if ( json.length <= 0 ) return resolve( undefined )
 
 		const match = platform_name()
