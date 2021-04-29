@@ -61,7 +61,7 @@ var path = __importStar(require("path"));
 var installer = __importStar(require("./installer"));
 var releases = __importStar(require("./releases"));
 var debug = process.argv.includes('debug');
-function run() {
+function main() {
     return __awaiter(this, void 0, void 0, function () {
         var bmx_ver, bmx_release, cache_dir, matchersPath, error_1;
         return __generator(this, function (_a) {
@@ -75,10 +75,10 @@ function run() {
                 case 1:
                     bmx_release = _a.sent();
                     if (!bmx_release)
-                        throw new Error("Could not find a version that satisfied version spec: " + bmx_ver);
+                        throw new Error("Could not find a release that satisfied version '" + bmx_ver + "'");
                     // Update official release version
                     bmx_ver = bmx_release.version;
-                    console.log("Using BlitzMax version " + bmx_ver);
+                    console.log("Settling on release " + bmx_release.name);
                     cache_dir = debug ? undefined : tc.find('blitzmax', bmx_ver);
                     if (!!cache_dir) return [3 /*break*/, 3];
                     console.log("BlitzMax " + bmx_ver + " can't be found using cache, attempting to download ...");
@@ -111,4 +111,4 @@ function run() {
         });
     });
 }
-run();
+main();

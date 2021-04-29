@@ -1,15 +1,26 @@
 import * as https from 'https'
-import * as path from 'path'
 import * as os from 'os'
 
 export const apiUrl = 'https://github.com/bmx-ng/bmx-ng/releases/download/'
 const knownArchiveFormats: string[] = ['.tar.xz', '.zip', '.7z']
 export let archiveFormat: string = knownArchiveFormats[0]
+const maxRetry = 3
 
 export async function get( version: string ): Promise<Release | undefined> {
 	return new Promise<Release | undefined>( async ( resolve, _reject ) => {
 
+		console.log( `Searching for BlitzMax release '${version}' ...` )
+
 		let json: ReleasePage[] | undefined = await release_pages()
+		
+		// Okay, do a few retries to fetch releases if it failed
+		if ( !json ) {
+			for (let retry = 1; retry <= maxRetry; retry++) {
+				console.log( `Unable to fetch releases, retry ${retry}/${maxRetry}` )
+				json  = await release_pages()
+			}
+		}
+		
 		if ( !json ) return resolve( undefined )
 		if ( json == undefined ) return resolve( undefined )
 		if ( json.length <= 0 ) return resolve( undefined )

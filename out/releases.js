@@ -61,17 +61,36 @@ var os = __importStar(require("os"));
 exports.apiUrl = 'https://github.com/bmx-ng/bmx-ng/releases/download/';
 var knownArchiveFormats = ['.tar.xz', '.zip', '.7z'];
 exports.archiveFormat = knownArchiveFormats[0];
+var maxRetry = 3;
 function get(version) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, _reject) { return __awaiter(_this, void 0, void 0, function () {
-                    var json, match, releasePageIndex, release, releaseIndex, asset, formatIndex, format;
+                    var json, retry, match, releasePageIndex, release, releaseIndex, asset, formatIndex, format;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
-                            case 0: return [4 /*yield*/, release_pages()];
+                            case 0:
+                                console.log("Searching for BlitzMax release '" + version + "' ...");
+                                return [4 /*yield*/, release_pages()
+                                    // Okay, do a few retries to fetch releases if it failed
+                                ];
                             case 1:
                                 json = _a.sent();
+                                if (!!json) return [3 /*break*/, 5];
+                                retry = 1;
+                                _a.label = 2;
+                            case 2:
+                                if (!(retry <= maxRetry)) return [3 /*break*/, 5];
+                                console.log("Unable to fetch releases, retry " + retry + "/" + maxRetry);
+                                return [4 /*yield*/, release_pages()];
+                            case 3:
+                                json = _a.sent();
+                                _a.label = 4;
+                            case 4:
+                                retry++;
+                                return [3 /*break*/, 2];
+                            case 5:
                                 if (!json)
                                     return [2 /*return*/, resolve(undefined)];
                                 if (json == undefined)

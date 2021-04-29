@@ -12,8 +12,7 @@ export async function download( url: string, version: string ): Promise<string |
 
 	// Download BlitzMax
 	try {
-		console.log( `Downloading BlitzMax from ${url}` )
-		console.log( `Archive format: ${releases.archiveFormat}` )
+		console.log( `Downloading BlitzMax from ${url} ...` )
 
 		download_path = await tc.downloadTool( url )
 
@@ -58,6 +57,7 @@ export async function download( url: string, version: string ): Promise<string |
 		const runScript = path.join( ext_path, 'run_me_first.command' )
 		if ( fs.existsSync( runScript ) ) {
 			console.log( `BlitzMax needs to be compiled on this platform` )
+			console.log( `Compiling BlitzMax ...` )
 			console.log( execSync( runScript ).toString() )
 		}
 

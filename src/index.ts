@@ -7,18 +7,18 @@ import { Release } from './releases'
 
 const debug = process.argv.includes( 'debug' )
 
-async function run() {
+async function main() {
 	try {
 		let bmx_ver = core.getInput( 'bmx-version' )
 		if ( !bmx_ver ) bmx_ver = 'latest'
 
 		// Attempt to find the requested release
-		let bmx_release: undefined | Release = await releases.get( bmx_ver )
-		if ( !bmx_release ) throw new Error( `Could not find a version that satisfied version spec: ${bmx_ver}` )
+		let bmx_release = await releases.get( bmx_ver )
+		if ( !bmx_release ) throw new Error( `Could not find a release that satisfied version '${bmx_ver}'` )
 
 		// Update official release version
 		bmx_ver = bmx_release.version
-		console.log( `Using BlitzMax version ${bmx_ver}` )
+		console.log( `Settling on release ${bmx_release.name}` )
 
 		// Look for a cached BlitzMax version
 		let cache_dir: string | undefined = debug ? undefined : tc.find( 'blitzmax', bmx_ver )
@@ -48,12 +48,9 @@ async function run() {
 		const matchersPath = path.join( __dirname, '..', 'matchers.json' )
 		console.log( `##[add-matcher]${matchersPath}` )
 
-		// Show PATH
-		// console.log( "PATH: " + process.env.PATH )
-
 	} catch ( error ) {
 		core.setFailed( error.message )
 	}
 }
 
-run()
+main()

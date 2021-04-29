@@ -69,8 +69,7 @@ function download(url, version) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    console.log("Downloading BlitzMax from " + url);
-                    console.log("Archive format: " + releases.archiveFormat);
+                    console.log("Downloading BlitzMax from " + url + " ...");
                     return [4 /*yield*/, tc.downloadTool(url)];
                 case 1:
                     download_path = _b.sent();
@@ -113,6 +112,7 @@ function download(url, version) {
                     runScript = path.join(ext_path, 'run_me_first.command');
                     if (fs.existsSync(runScript)) {
                         console.log("BlitzMax needs to be compiled on this platform");
+                        console.log("Compiling BlitzMax ...");
                         console.log(child_process_1.execSync(runScript).toString());
                     }
                     // Cache the BlitzMax dir
