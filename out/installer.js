@@ -60,10 +60,11 @@ var tc = __importStar(require("@actions/tool-cache"));
 var os = __importStar(require("os"));
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
+var child_process_1 = require("child_process");
 var releases = __importStar(require("./releases"));
 function download(url, version) {
     return __awaiter(this, void 0, void 0, function () {
-        var download_path, ext_path, cache_path, error_1, output, _a, runScript, execSync, error_2;
+        var download_path, ext_path, cache_path, error_1, output, _a, runScript, error_2;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -110,9 +111,8 @@ function download(url, version) {
                     ext_path = path.join(ext_path, 'BlitzMax');
                     runScript = 'run_me_first.command';
                     if (fs.existsSync(path.join(ext_path, runScript))) {
-                        console.log("Found " + runScript);
-                        execSync = require('exec-sync');
-                        execSync(runScript); // Do error checking!
+                        console.log("Found '" + runScript + "'");
+                        console.log(child_process_1.execSync(runScript, { cwd: ext_path }).toString());
                     }
                     // Cache the BlitzMax dir
                     console.log("Caching BlitzMax " + version + " ...");
