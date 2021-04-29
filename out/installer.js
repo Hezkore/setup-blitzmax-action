@@ -80,7 +80,7 @@ function download(url, version) {
                     throw new Error("Failed to download BlitzMax from " + url + ": " + error_1);
                 case 3:
                     _b.trys.push([3, 12, , 13]);
-                    console.log('Extracting ' + releases.archiveFormat + ' BlitzMax ...');
+                    console.log('Extracting BlitzMax ' + releases.archiveFormat.slice(1) + ' archive  ...');
                     output = './.bmx_tmp_build';
                     _a = releases.archiveFormat;
                     switch (_a) {

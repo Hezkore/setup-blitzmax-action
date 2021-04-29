@@ -24,7 +24,7 @@ export async function download( url: string, version: string ): Promise<string |
 
 	// Extract BlitzMax
 	try {
-		console.log( 'Extracting ' + releases.archiveFormat + ' BlitzMax ...' )
+		console.log( 'Extracting BlitzMax ' + releases.archiveFormat.slice( 1 ) + ' archive  ...' )
 
 		// Do extract!
 		const output = './.bmx_tmp_build'
