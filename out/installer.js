@@ -58,11 +58,12 @@ exports.__esModule = true;
 exports.download = void 0;
 var tc = __importStar(require("@actions/tool-cache"));
 var os = __importStar(require("os"));
+var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
 var releases = __importStar(require("./releases"));
 function download(url, version) {
     return __awaiter(this, void 0, void 0, function () {
-        var download_path, ext_path, cache_path, error_1, output, _a, error_2;
+        var download_path, ext_path, cache_path, error_1, output, _a, runScript, execSync, error_2;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -107,6 +108,12 @@ function download(url, version) {
                     console.log("BlitzMax extracted to " + ext_path);
                     // Make sure to enter the extracted BlitzMax dir
                     ext_path = path.join(ext_path, 'BlitzMax');
+                    runScript = 'run_me_first.command';
+                    if (fs.existsSync(path.join(ext_path, runScript))) {
+                        console.log("Found " + runScript);
+                        execSync = require('exec-sync');
+                        execSync(runScript); // Do error checking!
+                    }
                     // Cache the BlitzMax dir
                     console.log("Caching BlitzMax " + version + " ...");
                     return [4 /*yield*/, tc.cacheDir(ext_path, 'blitzmax', version)];

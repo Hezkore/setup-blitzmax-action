@@ -1,5 +1,6 @@
 import * as tc from '@actions/tool-cache'
 import * as os from 'os'
+import * as fs from 'fs'
 import * as path from 'path'
 import * as releases from './releases'
 
@@ -11,22 +12,22 @@ export async function download( url: string, version: string ): Promise<string |
 	// Download BlitzMax
 	try {
 		console.log( `Downloading BlitzMax from ${url}` )
-		
+
 		download_path = await tc.downloadTool( url )
-		
+
 		console.log( `BlitzMax downloaded to ${download_path}` )
-		
+
 	} catch ( error ) {
 		throw new Error( `Failed to download BlitzMax from ${url}: ${error}` )
 	}
 
 	// Extract BlitzMax
 	try {
-		console.log( 'Extracting '+  releases.archive_format() + ' BlitzMax ...' )
-		
+		console.log( 'Extracting ' + releases.archive_format() + ' BlitzMax ...' )
+
 		// Do extract!
 		const output = './.bmx_tmp_build'
-		switch (releases.archive_format()) {
+		switch ( releases.archive_format() ) {
 			case '7z':
 				// Windows does NOT have 7zip in PATH!
 				ext_path = await tc.extract7z( download_path, output,
@@ -35,28 +36,36 @@ export async function download( url: string, version: string ): Promise<string |
 						: undefined
 				)
 				break
-			
+
 			case 'zip':
 				ext_path = await tc.extractZip( download_path, output )
 				break
-				
+
 			default:
 				ext_path = await tc.extractTar( download_path, output, '-x' )
 				break
 		}
-		
+
 		if ( !ext_path ) throw new Error( 'Failed to extract BlitzMax from ' + download_path )
 		console.log( `BlitzMax extracted to ${ext_path}` )
-		
+
 		// Make sure to enter the extracted BlitzMax dir
 		ext_path = path.join( ext_path, 'BlitzMax' )
-		
+
+		// Run 'run_me_first.command' if it exists
+		const runScript = 'run_me_first.command'
+		if ( fs.existsSync( path.join( ext_path, runScript ) ) ) {
+			console.log( `Found ${runScript}` )
+			let execSync = require( 'exec-sync' )
+			execSync( runScript ) // Do error checking!
+		}
+
 		// Cache the BlitzMax dir
 		console.log( `Caching BlitzMax ${version} ...` )
 		cache_path = await tc.cacheDir( ext_path, 'blitzmax', version )
-		
+
 		console.log( `BlitzMax was added to cache using dir: ${cache_path}` )
-		
+
 	} catch ( error ) {
 		throw new Error( `Failed to extract BlitzMax version ${version}: ${error}` )
 	}
